@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>NICAR 2026 Indy Local Guide</title>
+<title>NICAR Indy Restaurant Guide</title>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css" />
 <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -979,16 +979,44 @@
   @media (max-width: 900px) {
     .content-page { padding: 1.25rem 1rem; }
     .content-page h2 { font-size: 1.3rem; }
-    .transport-table { font-size: 0.85rem; }
-    .transport-table th, .transport-table td { padding: 6px 8px; }
-    .table-wrap {
-      overflow-x: auto;
-      -webkit-overflow-scrolling: touch;
-      margin-bottom: 0.5rem;
+    .table-wrap { margin-bottom: 0.5rem; }
+    /* Stack all transport tables as cards on mobile */
+    .transport-table { font-size: 0.88rem; }
+    .transport-table thead { display: none; }
+    .transport-table tbody tr {
+      display: block;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      margin-bottom: 10px;
+      padding: 10px 12px;
+      background: var(--surface);
     }
-    .table-wrap .transport-table {
-      min-width: 480px;
-      margin-bottom: 0;
+    .transport-table tbody tr:last-child { border-bottom: 1px solid var(--border); }
+    .transport-table td {
+      display: flex;
+      gap: 6px;
+      padding: 3px 0;
+      border-bottom: none;
+      font-size: 0.88rem;
+      line-height: 1.45;
+    }
+    .transport-table td:first-child {
+      font-size: 0.95rem;
+      font-weight: 600;
+      padding-bottom: 6px;
+      margin-bottom: 2px;
+      border-bottom: 1px solid var(--border);
+    }
+    .transport-table td[data-label]::before {
+      content: attr(data-label) ": ";
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.72rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      white-space: nowrap;
+      padding-top: 2px;
+      flex-shrink: 0;
     }
   }
 </style>
@@ -1022,12 +1050,12 @@
       <span style="font-size:18px;color:var(--text-muted);line-height:1;">↺</span>
     </button>
     <div class="legend">
-      <div class="legend-title">Price</div>
+      <div class="legend-title">Legend</div>
       <div class="legend-item"><div class="legend-dot" style="background: var(--green)"></div> $</div>
       <div class="legend-item"><div class="legend-dot" style="background: var(--blue)"></div> $$</div>
       <div class="legend-item"><div class="legend-dot" style="background: var(--purple)"></div> $$$</div>
       <div class="legend-item"><div class="legend-dot" style="background: var(--red)"></div> $$$$</div>
-      <div class="legend-item" style="margin-top:6px;padding-top:6px;border-top:1px solid var(--border)"><div class="legend-dot" style="background: var(--accent)"></div> JW Marriott</div>
+      <div class="legend-item" style="margin-top:6px;padding-top:6px;border-top:1px solid var(--border)"><svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" style="flex-shrink:0"><polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26" fill="#b8792e" stroke="#b8792e" stroke-width="1" stroke-linejoin="round"/></svg> JW Marriott</div>
     </div>
   </div>
   <div class="table-panel">
@@ -1125,21 +1153,21 @@
       <tbody>
         <tr>
           <td><strong>IndyGo Bus Route 8</strong></td>
-          <td>$2.75</td>
-          <td>45–60 min</td>
-          <td>Most budget-friendly; runs every 30 min. Pay with the <a href="https://www.indygo.net/mykey/" target="_blank" rel="noopener">myKey app</a>. Pickup on the ground floor past rental car counters.</td>
+          <td data-label="Cost">$2.75</td>
+          <td data-label="Time">45–60 min</td>
+          <td data-label="Notes">Most budget-friendly; runs every 30 min. Pay with the <a href="https://www.indygo.net/mykey/" target="_blank" rel="noopener">myKey app</a>. Pickup on the ground floor past rental car counters.</td>
         </tr>
         <tr>
           <td><strong>Uber / Lyft</strong></td>
-          <td>$25–40</td>
-          <td>20–30 min</td>
-          <td>Most convenient; varies by demand. <a href="#">Find a rideshare buddy via IRE's form</a>. Same ground-floor pickup area.</td>
+          <td data-label="Cost">$25–40</td>
+          <td data-label="Time">20–30 min</td>
+          <td data-label="Notes">Most convenient; varies by demand. <a href="#">Find a rideshare buddy via IRE's form</a>. Same ground-floor pickup area.</td>
         </tr>
         <tr>
           <td><strong>Taxi</strong></td>
-          <td>$45–55</td>
-          <td>20–30 min</td>
-          <td>Taxi stand on the ground floor at the end of the standard pickup/dropoff area.</td>
+          <td data-label="Cost">$45–55</td>
+          <td data-label="Time">20–30 min</td>
+          <td data-label="Notes">Taxi stand on the ground floor at the end of the standard pickup/dropoff area.</td>
         </tr>
       </tbody>
     </table>
@@ -1186,13 +1214,13 @@
     <table class="transport-table">
       <thead><tr><th>Event</th><th>Type</th><th>Venue</th><th>Date</th><th>Cost</th></tr></thead>
       <tbody>
-        <tr><td><strong>Blithe Spirit</strong></td><td>Comedy</td><td>Scottish Rite · Downtown</td><td>Mar 5</td><td>$24</td></tr>
-        <tr><td><strong>Curtis Cook</strong></td><td>Comedy</td><td>Helium Comedy Club · Downtown</td><td>Mar 5</td><td>$16</td></tr>
-        <tr><td><strong>Arkansauce</strong></td><td>Bluegrass</td><td>Turn Table · Broad Ripple (20-min drive)</td><td>Mar 5</td><td>$22</td></tr>
-        <tr><td><strong>Indianapolis Symphony & Ballet: The Sleeping Beauty</strong></td><td>Dance</td><td>Butler University · Broad Ripple (20-min drive)</td><td>Mar 6</td><td>$24</td></tr>
-        <tr><td><strong>The Floozies + Too Many Zooz</strong></td><td>Brass house</td><td>Old National Centre · Downtown</td><td>Mar 6</td><td>$36</td></tr>
-        <tr><td><strong>Foxy Shazam</strong></td><td>Rock</td><td>Turn Table · Broad Ripple (20-min drive)</td><td>Mar 7</td><td>$39</td></tr>
-        <tr><td><strong>Chatterbox Jazz Club</strong>*</td><td>Jazz</td><td>Downtown</td><td>Every night (no Sundays)</td><td>—</td></tr>
+        <tr><td><strong>Blithe Spirit</strong></td><td data-label="Type">Comedy</td><td data-label="Venue">Scottish Rite · Downtown</td><td data-label="Date">Mar 5</td><td data-label="Cost">$24</td></tr>
+        <tr><td><strong>Curtis Cook</strong></td><td data-label="Type">Comedy</td><td data-label="Venue">Helium Comedy Club · Downtown</td><td data-label="Date">Mar 5</td><td data-label="Cost">$16</td></tr>
+        <tr><td><strong>Arkansauce</strong></td><td data-label="Type">Bluegrass</td><td data-label="Venue">Turn Table · Broad Ripple (20-min drive)</td><td data-label="Date">Mar 5</td><td data-label="Cost">$22</td></tr>
+        <tr><td><strong>Indianapolis Symphony & Ballet: The Sleeping Beauty</strong></td><td data-label="Type">Dance</td><td data-label="Venue">Butler University · Broad Ripple (20-min drive)</td><td data-label="Date">Mar 6</td><td data-label="Cost">$24</td></tr>
+        <tr><td><strong>The Floozies + Too Many Zooz</strong></td><td data-label="Type">Brass house</td><td data-label="Venue">Old National Centre · Downtown</td><td data-label="Date">Mar 6</td><td data-label="Cost">$36</td></tr>
+        <tr><td><strong>Foxy Shazam</strong></td><td data-label="Type">Rock</td><td data-label="Venue">Turn Table · Broad Ripple (20-min drive)</td><td data-label="Date">Mar 7</td><td data-label="Cost">$39</td></tr>
+        <tr><td><strong>Chatterbox Jazz Club</strong>*</td><td data-label="Type">Jazz</td><td data-label="Venue">Downtown</td><td data-label="Date">Every night (no Sundays)</td><td data-label="Cost">—</td></tr>
       </tbody>
     </table>
     </div>
@@ -1205,15 +1233,15 @@
       <tbody>
         <tr>
           <td><strong>Big 10 Women's Basketball Tournament</strong></td>
-          <td>Gainbridge Fieldhouse · Downtown</td>
-          <td>Mar 5–8</td>
-          <td>Approx. $20 or more</td>
+          <td data-label="Venue">Gainbridge Fieldhouse · Downtown</td>
+          <td data-label="Dates">Mar 5–8</td>
+          <td data-label="Cost">Approx. $20 or more</td>
         </tr>
         <tr>
           <td><strong>2026 U.S. Open: Bowling</strong></td>
-          <td>96th Street · 35-min drive</td>
-          <td>Mar 8</td>
-          <td>$45</td>
+          <td data-label="Venue">96th Street · 35-min drive</td>
+          <td data-label="Dates">Mar 8</td>
+          <td data-label="Cost">$45</td>
         </tr>
       </tbody>
     </table>
@@ -1263,18 +1291,18 @@
     <table class="transport-table">
       <thead><tr><th>Activity</th><th>Where</th><th>Date</th><th>Cost</th></tr></thead>
       <tbody>
-        <tr><td><strong>Maple Syrup Season</strong></td><td>Southeast Indy · 25-min drive</td><td>Mar 5–8</td><td>$6</td></tr>
-        <tr><td><strong>Candle making</strong> at Penn & Beech</td><td>Downtown</td><td></td><td>$20+</td></tr>
-        <tr><td><strong>Paint a pair of sneakers</strong> at Kicasso</td><td>Broad Ripple · 20-min drive</td><td></td><td>$49+</td></tr>
-        <tr><td><strong>Vintage video games & pinball</strong> at Tappers</td><td>Downtown</td><td></td><td>$15+</td></tr>
-        <tr><td><strong>Drag Queen Sip & Paint</strong></td><td>Downtown</td><td>Mar 7</td><td>$48</td></tr>
-        <tr><td><strong>Cold Frames & Seed Starting</strong> <span style="font-size:0.8em;color:var(--text-muted)">Gardening class</span></td><td>Broad Ripple · 20-min drive</td><td>Mar 7</td><td>$20</td></tr>
-        <tr><td><strong>Athenaeum Bier & Building Tour</strong></td><td>Downtown</td><td>Mar 8</td><td>$43</td></tr>
+        <tr><td><strong>Maple Syrup Season</strong></td><td data-label="Where">Southeast Indy · 25-min drive</td><td data-label="Date">Mar 5–8</td><td data-label="Cost">$6</td></tr>
+        <tr><td><strong>Candle making</strong> at Penn & Beech</td><td data-label="Where">Downtown</td><td data-label="Date"></td><td data-label="Cost">$20+</td></tr>
+        <tr><td><strong>Paint a pair of sneakers</strong> at Kicasso</td><td data-label="Where">Broad Ripple · 20-min drive</td><td data-label="Date"></td><td data-label="Cost">$49+</td></tr>
+        <tr><td><strong>Vintage video games & pinball</strong> at Tappers</td><td data-label="Where">Downtown</td><td data-label="Date"></td><td data-label="Cost">$15+</td></tr>
+        <tr><td><strong>Drag Queen Sip & Paint</strong></td><td data-label="Where">Downtown</td><td data-label="Date">Mar 7</td><td data-label="Cost">$48</td></tr>
+        <tr><td><strong>Cold Frames & Seed Starting</strong> <span style="font-size:0.8em;color:var(--text-muted)">Gardening class</span></td><td data-label="Where">Broad Ripple · 20-min drive</td><td data-label="Date">Mar 7</td><td data-label="Cost">$20</td></tr>
+        <tr><td><strong>Athenaeum Bier & Building Tour</strong></td><td data-label="Where">Downtown</td><td data-label="Date">Mar 8</td><td data-label="Cost">$43</td></tr>
         <tr>
           <td><strong>Indoor go-karting</strong></td>
-          <td>Speedway · 15-min drive</td>
-          <td>Mar 8</td>
-          <td>—</td>
+          <td data-label="Where">Speedway · 15-min drive</td>
+          <td data-label="Date">Mar 8</td>
+          <td data-label="Cost">—</td>
         </tr>
       </tbody>
     </table>
@@ -1375,7 +1403,7 @@ function priceClass(priceNum) {
 // Initialize map
 const map = L.map('map', {
   zoomControl: true
-}).setView([39.7700, -86.1560], 14);
+}).setView([39.7663, -86.1684], 14);
 
 L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
   attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> &copy; <a href="https://carto.com/">CARTO</a>',
@@ -1387,9 +1415,9 @@ L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
 const jwMarker = L.marker([39.7663, -86.1684], {
   icon: L.divIcon({
     className: '',
-    html: `<div style="width:24px;height:24px;border-radius:50%;background:#b8792e;border:2.5px solid #fff;box-shadow:0 2px 8px rgba(0,0,0,0.25);"></div>`,
-    iconSize: [24, 24],
-    iconAnchor: [12, 12]
+    html: `<svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" style="filter:drop-shadow(0 2px 4px rgba(0,0,0,0.35));"><polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26" fill="#b8792e" stroke="#fff" stroke-width="1.5" stroke-linejoin="round"/></svg>`,
+    iconSize: [28, 28],
+    iconAnchor: [14, 14]
   })
 }).addTo(map).bindPopup('<div class="popup-name">JW Marriott</div><div class="popup-desc">Conference hotel — your home base</div>', { autoPan: false });
 
@@ -1609,7 +1637,7 @@ document.getElementById('reset-map-btn').addEventListener('click', () => {
   document.querySelectorAll('.mobile-card.highlighted').forEach(el => el.classList.remove('highlighted'));
   document.querySelectorAll('.custom-marker.highlighted').forEach(el => el.classList.remove('highlighted'));
   map.closePopup();
-  map.setView([39.7700, -86.1560], 14, { animate: true });
+  map.setView([39.7663, -86.1684], 14, { animate: true });
 });
 
 // Mobile legend toggle
